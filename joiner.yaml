@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joiner
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: joiner
+  template:
+    metadata:
+      labels:
+        role: joiner
+    spec:
+      containers:
+      - name: joiner
+        image: marianrap/sdypp_joiner:0.13
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: REDIS_HOST
+          value: "redis-service.framework.services.gcp.com.ar."
+        - name: REDIS_PWD
+          value: "agusmarian"
+        - name: RABBIT_HOST
+          value: "rabbitmq-service.framework.services.gcp.com.ar."
+        - name: RABBIT_USER
+          value: "guest"
+        - name: RABBIT_PWD
+          value: "guest"
